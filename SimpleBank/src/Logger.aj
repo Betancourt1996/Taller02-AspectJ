@@ -35,15 +35,17 @@ public aspect Logger {
 	    	System.out.println("**** User created desde log ****");
 	    }
 	    
-	    pointcut deposito() : call(* moneyMake*(..) );
+	    pointcut deposito() : execution(* money*(..) );
 	    after() : deposito() {
 	    	System.out.println("**** Depositado ****");
 	    	try {
-	    	      FileWriter myWriter = new FileWriter(file);
-	    	      
-	    	      PrintWriter printWriter = new PrintWriter(myWriter);
-	    	      printWriter.println("algo");  //New line
-	    	      printWriter.close();
+	    	      FileWriter myWriter = new FileWriter(file,true);
+	    	      myWriter.write("datos");
+	    	      myWriter.write("\n");
+	    	      myWriter.close();
+	    	      //PrintWriter printWriter = new PrintWriter(myWriter);
+	    	      //printWriter.println("algo");  //New line
+	    	      //printWriter.close();
 	    	      System.out.println("Successfully wrote to the file.");
 	    	    } catch (IOException e) {
 	    	      System.out.println("An error occurred.");
