@@ -1,57 +1,55 @@
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.Calendar;
 
 public aspect Logger {	
-    // Define a Pointcut is
-    // collection of JoinPoint 
-	// call say* of class HelloAspectJDemo.
-   
-	/*
-	pointcut callSay(): call(* *.say*()); 
-    before() : callSay() {
-        System.out.println("Before call say");
-    } 
-    pointcut callBye(): call(* *.sayHello()); 
-    after() : callBye()  {
-        System.out.println("After call say");
-    }  
-    */
-
+		File file = new File("Log.txt");
 		
-	
 		
-		File file = new File("log.txt");
-	      
-		     
-	 
-	 
+		
+    	
+			
+		//FileWriter fw= new FileWriter(file);
+		//BufferedWriter bw= new BufferedWriter(fw);
 	    Calendar cal = Calendar.getInstance();
 	    //Aspecto: Deben hacer los puntos de cortes (pointcut) para crear un log con los tipos de transacciones realizadas.
-	    pointcut success() : call(* create*(..) );
+	    pointcut success() : execution(* create*(..) );
 	    after() : success() {
 	    	System.out.println("**** User created desde log ****");
 	    }
-	    
-	    pointcut deposito() : execution(* money*(..) );
-	    after() : deposito() {
-	    	System.out.println("**** Depositado ****");
-	    	try {
-	    	      FileWriter myWriter = new FileWriter(file,true);
-	    	      myWriter.write("datos");
-	    	      myWriter.write("\n");
-	    	      myWriter.close();
-	    	      //PrintWriter printWriter = new PrintWriter(myWriter);
-	    	      //printWriter.println("algo");  //New line
-	    	      //printWriter.close();
-	    	      System.out.println("Successfully wrote to the file.");
-	    	    } catch (IOException e) {
-	    	      System.out.println("An error occurred.");
-	    	      e.printStackTrace();
-	    	    }
+	    pointcut successtrans() : call(* moneyMake*(..) );
+	    after() : successtrans() {
+	    	System.out.println("**** Transaccion desde log ****");
+	    	escribir("Deposito dinero--HORA: "+cal.getTime());
 	    }
-	
-} 
+	    pointcut successtrans1() : call(* moneyWith*(..) );
+	    after() : successtrans1() {
+	    	System.out.println("**** Transacccion retirar desde log ****");
+	    	escribir("Retiro dinero--HORA: "+cal.getTime());
+	    }
+	    
+
+
+	    public void escribir(String msj){
+	        try {
+
+	            String str = msj;
+	            
+	            if (!file.exists()) {
+	                file.createNewFile();
+	            }
+
+	            FileWriter fw = new FileWriter(file.getAbsoluteFile(),true);
+	            BufferedWriter bw = new BufferedWriter(fw);	          
+	            bw.append(str+"\n");
+	            bw.close();
+
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+
+	    }
+}  
 
