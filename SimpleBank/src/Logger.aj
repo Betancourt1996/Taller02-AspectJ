@@ -1,4 +1,7 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Calendar;
 
 public aspect Logger {	
@@ -16,11 +19,15 @@ public aspect Logger {
         System.out.println("After call say");
     }  
     */
-	
-	
-	
 
+		
+	
+		
 		File file = new File("log.txt");
+	      
+		     
+	 
+	 
 	    Calendar cal = Calendar.getInstance();
 	    //Aspecto: Deben hacer los puntos de cortes (pointcut) para crear un log con los tipos de transacciones realizadas.
 	    pointcut success() : call(* create*(..) );
@@ -28,6 +35,21 @@ public aspect Logger {
 	    	System.out.println("**** User created desde log ****");
 	    }
 	    
+	    pointcut deposito() : call(* moneyMake*(..) );
+	    after() : deposito() {
+	    	System.out.println("**** Depositado ****");
+	    	try {
+	    	      FileWriter myWriter = new FileWriter(file);
+	    	      
+	    	      PrintWriter printWriter = new PrintWriter(myWriter);
+	    	      printWriter.println("algo");  //New line
+	    	      printWriter.close();
+	    	      System.out.println("Successfully wrote to the file.");
+	    	    } catch (IOException e) {
+	    	      System.out.println("An error occurred.");
+	    	      e.printStackTrace();
+	    	    }
+	    }
 	
-}  
+} 
 
