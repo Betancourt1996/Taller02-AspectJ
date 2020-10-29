@@ -1,5 +1,7 @@
 package com.bank;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,7 +17,16 @@ public class Bank {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { 
+    	File file = new File("log.txt");
+    	
+	    	  try {
+				file.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	      
         int opcion = 0;
         initBank();
         while(opcion != EXIT){
@@ -23,6 +34,7 @@ public class Bank {
         };
 
     }
+    
     public static int menu(){
         System.out.println("Banco AspectJ");
         System.out.println("------------------------------------");
