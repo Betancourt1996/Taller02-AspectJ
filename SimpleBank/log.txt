@@ -1,2 +1,6 @@
 Deposito dinero--HORA: Thu Oct 29 17:57:43 COT 2020
 Retiro dinero--HORA: Thu Oct 29 17:57:43 COT 2020
+Deposito dinero--HORA: Thu Oct 29 18:09:19 COT 2020
+Deposito dinero--HORA: Thu Oct 29 18:09:19 COT 2020
+Deposito dinero--HORA: Thu Oct 29 18:09:51 COT 2020
+Retiro dinero--HORA: Thu Oct 29 18:09:51 COT 2020
